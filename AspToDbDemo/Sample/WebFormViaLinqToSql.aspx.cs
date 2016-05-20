@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -7,74 +8,67 @@ using System.Web.UI.WebControls;
 
 namespace Sample
 {
-    public partial class WebForm_LinqToSql : System.Web.UI.Page
+    public partial class WebFormViaLinqToSql : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            DisplayReports();
         }
 
-
-        private void GetPersons()
+        private void DisplayReports()
         {
-            var dbContext = new AdventureWorksDataContext();
-
-            var query = (from person in dbContext.Persons
-                         where person.FirstName.StartsWith("James")
-                         orderby person.FirstName descending
-                         select new { person.FirstName, person.LastName, person.MiddleName }).Take(10);
-
-            GridView1.DataSource = query;
-            GridView1.DataBind();
+            using (var dbContext = new DemoDbDataClassesDataContext())
+            {
+                var query = (from report in dbContext.Reports
+                             orderby report.Name ascending
+                             select new { report.Name, report.Description, report.Type, report.Template }).Take(1000);
+                GridView1.DataSource = query;
+                GridView1.DataBind();
+            }
         }
 
         protected void InsertButton_OnClick(object sender, EventArgs e)
         {
-            using (var dbContext = new AdventureWorksDataContext())
+            using (var dbContext = new DemoDbDataClassesDataContext())
             {
-                var person = new Person
-                {
-                    BusinessEntityID = 0619223,
-                    PersonType = "EM",
-                    NameStyle = true,
-                    FirstName = "Luai",
-                    LastName = "Kamal",
-                    EmailPromotion = 1,
-                    rowguid = Guid.NewGuid(),
-                    ModifiedDate = DateTime.Now
-                };
-                dbContext.Persons.InsertOnSubmit(person);
+                var report = new Report()
+                { Name = "Test" , Description = "---" , IsMonthly = true};
+                dbContext.Reports.InsertOnSubmit(report);
                 dbContext.SubmitChanges();
             }
-            GetPersons();
+            DisplayReports();
         }
 
         protected void UpdateButton_OnClick(object sender, EventArgs e)
         {
-            using (var dbContext = new AdventureWorksDataContext())
+            using (var dbContext = new DemoDbDataClassesDataContext())
             {
-                var firstOrDefault = dbContext.Persons.FirstOrDefault(x => x.FirstName == "James");
+                var firstOrDefault = dbContext.Reports.FirstOrDefault(x => x.IsMonthly);
                 if (firstOrDefault != null)
-                    firstOrDefault.FirstName = "Jamesssssss";
+                    firstOrDefault.Description = "---" + firstOrDefault.Description;
                 dbContext.SubmitChanges();
             }
-            GetPersons();
+            DisplayReports();
         }
 
         protected void DeleteButton_OnClick(object sender, EventArgs e)
         {
-            using (var dbContext = new AdventureWorksDataContext())
+            using (var dbContext = new DemoDbDataClassesDataContext())
             {
-                var theJamesssssss = dbContext.Persons.Where(x => x.FirstName == "Jamesssssss").ToList();
+                var reports = dbContext.Reports.Where(x => x.Description.StartsWith("---")).ToList();
 
-                foreach (var jamesssssss in theJamesssssss)
+                foreach (var report in reports)
                 {
-                    dbContext.Persons.DeleteOnSubmit(jamesssssss);
+                    dbContext.Reports.DeleteOnSubmit(report);
                 }
                 dbContext.SubmitChanges();
-
             }
-            GetPersons();
+            DisplayReports();
+        }
+
+        protected void DisplayReports_OnClick(object sender, EventArgs e)
+        {
+            DisplayReports();
         }
     }
 }

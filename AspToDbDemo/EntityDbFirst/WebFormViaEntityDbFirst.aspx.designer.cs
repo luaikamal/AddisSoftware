@@ -10,7 +10,7 @@
 namespace Sample {
     
     
-    public partial class WebFormViaLinqToSql {
+    public partial class WebFormEntityDbFirst {
         
         /// <summary>
         /// form1 control.

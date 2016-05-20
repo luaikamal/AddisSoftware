@@ -1,0 +1,987 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DbDemo" Class="DemoDbDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=Psalms;Initial Catalog=DbDemo;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="DbDemoConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.BillingInfo" Member="BillingInfos">
+    <Type Name="BillingInfo">
+      <Column Name="ClubID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CouponID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ProfileID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="PaymentID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="MaskedCardNum" Type="System.String" DbType="VarChar(24)" CanBeNull="true" />
+      <Column Name="ExpirationDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Price" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="IntervalDuration" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IntervalType" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="IntroPeriod" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IntroPrice" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="DiscountType" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="DiscountDuration" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DiscountAmount" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="TotalChargeCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NextChargeDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="NextChargeAmount" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="PastDueAmount" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="PastDueSince" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SuspendPolicyType" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="UnbilledBalance" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="BilledChargeCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Club_BillingInfo" Member="Club" ThisKey="ClubID" OtherKey="ClubID" Type="Club" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.YesNoAnswers" Member="YesNoAnswers">
+    <Type Name="YesNoAnswer">
+      <Column Name="QuestionID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ClubID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Year" Type="System.Int16" DbType="SmallInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Month" Type="System.Byte" DbType="TinyInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Answer" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Club_YesNoAnswer" Member="Club" ThisKey="ClubID" OtherKey="ClubID" Type="Club" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Question_YesNoAnswer" Member="Question" ThisKey="QuestionID" OtherKey="QuestionID" Type="Question" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Calculations" Member="Calculations">
+    <Type Name="Calculation">
+      <Column Name="CalcID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Operator" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Q1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Q2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="QuestionList" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="MaskYear" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="MaskMonth" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Constant" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ClubExclusions" Member="ClubExclusions">
+    <Type Name="ClubExclusion">
+      <Column Name="Year" Type="System.Int16" DbType="SmallInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ClubID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Club_ClubExclusion" Member="Club" ThisKey="ClubID" OtherKey="ClubID" Type="Club" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Clubs" Member="Clubs">
+    <Type Name="Club">
+      <Column Name="ClubID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="City" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="StateID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Zip" Type="System.String" DbType="NVarChar(80) NOT NULL" CanBeNull="false" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(80) NOT NULL" CanBeNull="false" />
+      <Column Name="YearFounded" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Limited" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ClubTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FiscalYearStart" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="CanCluster" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CreationDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Properties" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="SkuID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SubscriptionStartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="StateName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="CountryID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Address2" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="ExpirationMailSent" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ExpiringMailSent" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="InCart" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Club_BillingInfo" Member="BillingInfo" ThisKey="ClubID" OtherKey="ClubID" Type="BillingInfo" Cardinality="One" />
+      <Association Name="Club_YesNoAnswer" Member="YesNoAnswers" ThisKey="ClubID" OtherKey="ClubID" Type="YesNoAnswer" />
+      <Association Name="Club_ClubExclusion" Member="ClubExclusions" ThisKey="ClubID" OtherKey="ClubID" Type="ClubExclusion" />
+      <Association Name="Club_MultipleChoiceAnswer" Member="MultipleChoiceAnswers" ThisKey="ClubID" OtherKey="ClubID" Type="MultipleChoiceAnswer" />
+      <Association Name="Club_NumericAnswer" Member="NumericAnswers" ThisKey="ClubID" OtherKey="ClubID" Type="NumericAnswer" />
+      <Association Name="Club_SsoClub" Member="SsoClub" ThisKey="ClubID" OtherKey="ClubID" Type="SsoClub" Cardinality="One" />
+      <Association Name="Club_TextAnswer" Member="TextAnswers" ThisKey="ClubID" OtherKey="ClubID" Type="TextAnswer" />
+      <Association Name="Club_User" Member="Users" ThisKey="ClubID" OtherKey="ClubID" Type="User" />
+      <Association Name="ClubType_Club" Member="ClubType" ThisKey="ClubTypeID" OtherKey="ID" Type="ClubType" IsForeignKey="true" />
+      <Association Name="Country_Club" Member="Country" ThisKey="CountryID" OtherKey="CountryID" Type="Country" IsForeignKey="true" />
+      <Association Name="State_Club" Member="State" ThisKey="StateID" OtherKey="StateID" Type="State" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ClubTypes" Member="ClubTypes">
+    <Type Name="ClubType">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="TypeSingular" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="TypePlural" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="PositionA1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FilterA1" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="PositionA2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FilterA2" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="PositionA3" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FilterA3" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="PositionA4" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FilterA4" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="PositionA5" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FilterA5" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="PositionB1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FilterB1" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="PositionB2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FilterB2" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="PositionB3" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FilterB3" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="PositionB4" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FilterB4" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="PositionB5" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FilterB5" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="MyDataTab" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="CompareDataTab" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="ReportTab" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="MyDataHeader" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="CompareDataHeader" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="ReportHeader" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="FilterReports" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
+      <Column Name="IsClubTypeA1" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsClubTypeA2" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsClubTypeA3" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsClubTypeA4" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsClubTypeA5" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsClubTypeB1" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsClubTypeB2" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsClubTypeB3" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsClubTypeB4" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsClubTypeB5" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ImageUrl" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="IsSalary" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsWriteOnly" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="WriteOnlyMessage" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="DescrA1" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
+      <Column Name="DescrA2" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
+      <Column Name="DescrA3" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
+      <Column Name="DescrA4" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
+      <Column Name="DescrA5" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
+      <Column Name="DescrB1" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
+      <Column Name="DescrB2" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
+      <Column Name="DescrB3" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
+      <Column Name="DescrB4" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
+      <Column Name="DescrB5" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
+      <Column Name="ShowProgressBar" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ShowProgressGraph" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ShowProgressText" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="PositionA6" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FilterA6" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="PositionB6" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FilterB6" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="IsClubTypeA6" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsClubTypeB6" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="DescrA6" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
+      <Column Name="DescrB6" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
+      <Column Name="IsReadOnly" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="HomeLink" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="StaticReportTab" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="StaticReportHeader" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="MyDataTabOrder" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="CompareDataTabOrder" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="StaticReportTabOrder" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="ReportTabOrder" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="ReportTabDisplayStyle" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="ReportTileHeader" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Association Name="ClubType_Club" Member="Clubs" ThisKey="ID" OtherKey="ClubTypeID" Type="Club" />
+      <Association Name="ClubType_Filter" Member="Filters" ThisKey="ID" OtherKey="ClubTypeID" Type="Filter" />
+      <Association Name="ClubType_Skus" Member="Skus" ThisKey="ID" OtherKey="ClubTypeID" Type="Skus" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Countries" Member="Countries">
+    <Type Name="Country">
+      <Column Name="CountryID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Abbreviation" Type="System.String" DbType="NChar(2) NOT NULL" CanBeNull="false" />
+      <Association Name="Country_Club" Member="Clubs" ThisKey="CountryID" OtherKey="CountryID" Type="Club" />
+      <Association Name="Country_User" Member="Users" ThisKey="CountryID" OtherKey="CountryID" Type="User" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Coupons" Member="Coupons">
+    <Type Name="Coupon">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Code" Type="System.String" DbType="VarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="Discount" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="Quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Skus" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="RecurDiscount" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="RecurType" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="RecurCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Dependency" Member="Dependencies">
+    <Type Name="Dependency">
+      <Column Name="QuestionID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CalculationID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Favorites" Member="Favorites">
+    <Type Name="Favorite">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ClubID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ClubTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="Data" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FileAnswers" Member="FileAnswers">
+    <Type Name="FileAnswer">
+      <Column Name="QuestionID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ClubID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Year" Type="System.Int16" DbType="SmallInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Month" Type="System.Byte" DbType="TinyInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FileData" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="MimeType" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FileName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="LastModified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="FileSize" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FilterInstances" Member="FilterInstances">
+    <Type Name="FilterInstance">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ClubID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="FilterSession_FilterInstance" Member="FilterSession" ThisKey="ID" OtherKey="FilterID" Type="FilterSession" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Filters" Member="Filters">
+    <Type Name="Filter">
+      <Column Name="ClubTypeID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="QuestionID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Label" Type="System.String" DbType="VarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="Min" Type="System.Decimal" DbType="Decimal(16,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Max" Type="System.Decimal" DbType="Decimal(16,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Resolution" Type="System.Decimal" DbType="Decimal(16,2) NOT NULL" CanBeNull="false" />
+      <Column Name="IsMultiChoice" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsYesNo" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="ClubType_Filter" Member="ClubType" ThisKey="ClubTypeID" OtherKey="ID" Type="ClubType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FilterSessions" Member="FilterSessions">
+    <Type Name="FilterSession">
+      <Column Name="FilterID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="FilterSession_FilterInstance" Member="FilterInstances" ThisKey="FilterID" OtherKey="ID" Type="FilterInstance" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FunctionalAreas" Member="FunctionalAreas">
+    <Type Name="FunctionalArea">
+      <Column Name="AreaID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(80) NOT NULL" CanBeNull="false" />
+      <Column Name="ImageUrl" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="IsMonthly" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsGlobal" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="FunctionalArea_QuestionGroup" Member="QuestionGroups" ThisKey="AreaID" OtherKey="AreaID" Type="QuestionGroup" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Logs" Member="Logs">
+    <Type Name="Log">
+      <Column Name="Timestamp" Type="System.DateTime" DbType="DateTime NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ActionID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Parameters" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="ErrorMsg" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="User_Log" Member="User" ThisKey="UserID" OtherKey="UserID" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MultipleChoiceAnswers" Member="MultipleChoiceAnswers">
+    <Type Name="MultipleChoiceAnswer">
+      <Column Name="QuestionID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ClubID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Year" Type="System.Int16" DbType="SmallInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Month" Type="System.Byte" DbType="TinyInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="AnswerChoiceID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ChoiceList" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
+      <Association Name="Club_MultipleChoiceAnswer" Member="Club" ThisKey="ClubID" OtherKey="ClubID" Type="Club" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Question_MultipleChoiceAnswer" Member="Question" ThisKey="QuestionID" OtherKey="QuestionID" Type="Question" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MultipleChoiceQuestionInfo" Member="MultipleChoiceQuestionInfos">
+    <Type Name="MultipleChoiceQuestionInfo">
+      <Column Name="QuestionID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Answer" Type="System.String" DbType="NVarChar(1024) NOT NULL" CanBeNull="false" />
+      <Column Name="MultipleChoiceQuestionInfoID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ScoringCategory" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Question_MultipleChoiceQuestionInfo" Member="Question" ThisKey="QuestionID" OtherKey="QuestionID" Type="Question" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.NumericAnswers" Member="NumericAnswers">
+    <Type Name="NumericAnswer">
+      <Column Name="QuestionID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ClubID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Year" Type="System.Int16" DbType="SmallInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Month" Type="System.Byte" DbType="TinyInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Answer" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Association Name="Club_NumericAnswer" Member="Club" ThisKey="ClubID" OtherKey="ClubID" Type="Club" IsForeignKey="true" />
+      <Association Name="Question_NumericAnswer" Member="Question" ThisKey="QuestionID" OtherKey="QuestionID" Type="Question" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.NumericQuestionInfo" Member="NumericQuestionInfos">
+    <Type Name="NumericQuestionInfo">
+      <Column Name="QuestionID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MinValue" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MaxValue" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IsCurrency" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsPercentage" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Decimals" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="CommaDivider" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Question_NumericQuestionInfo" Member="Question" ThisKey="QuestionID" OtherKey="QuestionID" Type="Question" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OfferLogs" Member="OfferLogs">
+    <Type Name="OfferLog">
+      <Column Name="ClubID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OfferID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ResponseType" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Offers" Member="Offers">
+    <Type Name="Offer">
+      <Column Name="OfferID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="OfferUrl" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="FancyBoxDimensions" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ApplicableSkus" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="MaxRedemptions" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OfferSkuID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="TopOffer" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="ShowOnLogin" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PeerClusterClubs" Member="PeerClusterClubs">
+    <Type Name="PeerClusterClub">
+      <Column Name="PeerClusterID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ClubID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="PeerCluster_PeerClusterClub" Member="PeerCluster" ThisKey="PeerClusterID" OtherKey="ID" Type="PeerCluster" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PeerClusters" Member="PeerClusters">
+    <Type Name="PeerCluster">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="OwnerClubID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Shared" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="PeerCluster_PeerClusterClub" Member="PeerClusterClubs" ThisKey="ID" OtherKey="PeerClusterID" Type="PeerClusterClub" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PrintSessions" Member="PrintSessions">
+    <Type Name="PrintSession">
+      <Column Name="Token" Type="System.Data.Linq.Binary" DbType="Binary(32) NOT NULL" IsPrimaryKey="true" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="Expires" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Year" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="MonthDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="AnnualView" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="MonthlyView" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="FilterID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Purchases" Member="Purchases">
+    <Type Name="Purchase">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ClubID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SkuID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ListPrice" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="PurchasePrice" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="CouponId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Refunded" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Notes" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="ReportID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ClubReportIndex" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Type" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Invoice" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="BillDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.QuestionGroups" Member="QuestionGroups">
+    <Type Name="QuestionGroup">
+      <Column Name="QuestionGroupID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="AreaID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(80) NOT NULL" CanBeNull="false" />
+      <Column Name="HeaderText" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TemplateGroupID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CheckAllMetricID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="QuestionGroup_Question" Member="Questions" ThisKey="QuestionGroupID" OtherKey="QuestionGroupID" Type="Question" />
+      <Association Name="FunctionalArea_QuestionGroup" Member="FunctionalArea" ThisKey="AreaID" OtherKey="AreaID" Type="FunctionalArea" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Questions" Member="Questions">
+    <Type Name="Question">
+      <Column Name="QuestionID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="QuestionGroupID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="QuestionTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Text" Type="System.String" DbType="NVarChar(1024) NOT NULL" CanBeNull="false" />
+      <Column Name="Help" Type="System.String" DbType="NVarChar(2048) NOT NULL" CanBeNull="false" />
+      <Column Name="Prefix" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="IsCalculated" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Indent" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MirrorID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Checksum" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ChooseMany" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="SumForYtd" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ChecksumLabel" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="IgnoreZero" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsMirrorEditable" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsLongAnswer" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ShowPopupChart" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsMirrorOverride" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Question_YesNoAnswer" Member="YesNoAnswers" ThisKey="QuestionID" OtherKey="QuestionID" Type="YesNoAnswer" />
+      <Association Name="Question_MultipleChoiceAnswer" Member="MultipleChoiceAnswers" ThisKey="QuestionID" OtherKey="QuestionID" Type="MultipleChoiceAnswer" />
+      <Association Name="Question_MultipleChoiceQuestionInfo" Member="MultipleChoiceQuestionInfos" ThisKey="QuestionID" OtherKey="QuestionID" Type="MultipleChoiceQuestionInfo" />
+      <Association Name="Question_NumericAnswer" Member="NumericAnswers" ThisKey="QuestionID" OtherKey="QuestionID" Type="NumericAnswer" />
+      <Association Name="Question_NumericQuestionInfo" Member="NumericQuestionInfo" ThisKey="QuestionID" OtherKey="QuestionID" Type="NumericQuestionInfo" Cardinality="One" />
+      <Association Name="Question_TextAnswer" Member="TextAnswers" ThisKey="QuestionID" OtherKey="QuestionID" Type="TextAnswer" />
+      <Association Name="Question_TextQuestionInfo" Member="TextQuestionInfo" ThisKey="QuestionID" OtherKey="QuestionID" Type="TextQuestionInfo" Cardinality="One" />
+      <Association Name="QuestionGroup_Question" Member="QuestionGroup" ThisKey="QuestionGroupID" OtherKey="QuestionGroupID" Type="QuestionGroup" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ReportPages" Member="ReportPages">
+    <Type Name="ReportPage">
+      <Column Name="ReportID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="ReportPage_ReportPageValue" Member="ReportPageValues" ThisKey="ReportID,ID" OtherKey="ReportID,PageID" Type="ReportPageValue" />
+      <Association Name="Report_ReportPage" Member="Report" ThisKey="ReportID" OtherKey="ID" Type="Report" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ReportPageValues" Member="ReportPageValues">
+    <Type Name="ReportPageValue">
+      <Column Name="ReportID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PageID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Value" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="ReportPage_ReportPageValue" Member="ReportPage" ThisKey="ReportID,PageID" OtherKey="ReportID,ID" Type="ReportPage" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Reports" Member="Reports">
+    <Type Name="Report">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsVisible" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsMonthly" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="Template" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="Icon" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Association Name="Report_ReportPage" Member="ReportPages" ThisKey="ID" OtherKey="ReportID" Type="ReportPage" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Roles" Member="Roles">
+    <Type Name="Role">
+      <Column Name="RoleID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(80) NOT NULL" CanBeNull="false" />
+      <Association Name="Role_User" Member="Users" ThisKey="RoleID" OtherKey="RoleID" Type="User" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SecretAnswers" Member="SecretAnswers">
+    <Type Name="SecretAnswer">
+      <Column Name="SecretAnswerID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SecretQuestionID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Text" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Association Name="SecretQuestion_SecretAnswer" Member="SecretQuestion" ThisKey="SecretQuestionID" OtherKey="SecretQuestionID" Type="SecretQuestion" IsForeignKey="true" />
+      <Association Name="User_SecretAnswer" Member="User" ThisKey="UserID" OtherKey="UserID" Type="User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SecretQuestions" Member="SecretQuestions">
+    <Type Name="SecretQuestion">
+      <Column Name="SecretQuestionID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Text" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="IsCustom" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="SecretQuestion_SecretAnswer" Member="SecretAnswers" ThisKey="SecretQuestionID" OtherKey="SecretQuestionID" Type="SecretAnswer" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Settings" Member="Settings">
+    <Type Name="Setting">
+      <Column Name="Name" Type="System.String" DbType="NVarChar(250) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Value" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Skus" Member="Skus">
+    <Type Name="Skus">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="ClubTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AccountType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="Duration" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="UpgradeUrl" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="RenewalUrl" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="PrerequisiteSkuList" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="ReceiptDescription" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="DataEntryDenied" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CompareAccessDenied" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ReportAccessDenied" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ShowMonthly" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="NoProgressRequired" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Validator" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="ResetStartDate" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="SendExpirationEmail" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DaysBeforeExpiration" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ExpiringUrl" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="SendExpiringEmail" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Recur" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="RecurPrice" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="RecurAfter" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RecurAfterUnits" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="RecurInterval" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RecurIntervalUnits" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="RecurTotalCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RecurIntroPeriod" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RecurIntroPrice" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="RecurSuspendPolicy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EmailTemplate" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RenewEmailTemplate" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="UpgradeEmailTemplate" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="InviteEmailTemplate" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ExpirationEmailTemplate" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ExpiringEmailTemplate" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RecurReceiptEmailTemplate" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SuspendedEmailTemplate" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ResetPasswordEmailTemplate" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DuplicateAccountEmailTemplate" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PeerClusterEditDenied" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="InviteSsoEmailTemplate" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SendSignupOnFirstUserFirstLogin" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="HidePeerCluster" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CanClusterNew" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="ExclusionNew" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="CanClusterUpgrade" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="ExclusionUpgrade" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="DirectInvoice" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="InviteExistingEmailTemplate" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DataEntryDeniedYears" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
+      <Column Name="CompareAccessDeniedYears" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
+      <Column Name="ReportAccessDeniedYears" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
+      <Column Name="AccountTypeUpgrade" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="ClubType_Skus" Member="ClubType" ThisKey="ClubTypeID" OtherKey="ID" Type="ClubType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SsoClubs" Member="SsoClubs">
+    <Type Name="SsoClub">
+      <Column Name="ClubID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SsoID" Type="System.String" DbType="VarChar(512) NOT NULL" CanBeNull="false" />
+      <Association Name="Club_SsoClub" Member="Club" ThisKey="ClubID" OtherKey="ClubID" Type="Club" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SsoUsers" Member="SsoUsers">
+    <Type Name="SsoUser">
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SsoID" Type="System.String" DbType="VarChar(512) NOT NULL" CanBeNull="false" />
+      <Association Name="User_SsoUser" Member="User" ThisKey="UserID" OtherKey="UserID" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.States" Member="States">
+    <Type Name="State">
+      <Column Name="StateID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Abbreviation" Type="System.String" DbType="NChar(2) NOT NULL" CanBeNull="false" />
+      <Association Name="State_Club" Member="Clubs" ThisKey="StateID" OtherKey="StateID" Type="Club" />
+      <Association Name="State_User" Member="Users" ThisKey="StateID" OtherKey="StateID" Type="User" />
+    </Type>
+  </Table>
+  <Table Name="dbo.StaticReports" Member="StaticReports">
+    <Type Name="StaticReport">
+      <Column Name="ReportID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ReportTitle" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(2000) NOT NULL" CanBeNull="false" />
+      <Column Name="CanDownload" Type="System.String" DbType="NVarChar(2000) NOT NULL" CanBeNull="false" />
+      <Column Name="CanBuy" Type="System.String" DbType="NVarChar(2000) NOT NULL" CanBeNull="false" />
+      <Column Name="PurchaseUrl" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="ListPrice" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="ProgressRequired" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ReportFileID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ThumbFileID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsSalary" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="WatermarkText" Type="System.String" DbType="NVarChar(2048)" CanBeNull="true" />
+      <Column Name="WatermarkStyle" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TextAnswers" Member="TextAnswers">
+    <Type Name="TextAnswer">
+      <Column Name="QuestionID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ClubID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Year" Type="System.Int16" DbType="SmallInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Month" Type="System.Byte" DbType="TinyInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Answer" Type="System.String" DbType="NVarChar(1024) NOT NULL" CanBeNull="false" />
+      <Association Name="Club_TextAnswer" Member="Club" ThisKey="ClubID" OtherKey="ClubID" Type="Club" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Question_TextAnswer" Member="Question" ThisKey="QuestionID" OtherKey="QuestionID" Type="Question" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TextQuestionInfo" Member="TextQuestionInfos">
+    <Type Name="TextQuestionInfo">
+      <Column Name="QuestionID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Width" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NoOfLines" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Question_TextQuestionInfo" Member="Question" ThisKey="QuestionID" OtherKey="QuestionID" Type="Question" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ClubID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RoleID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(80) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.Data.Linq.Binary" DbType="Binary(20) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="Salt" Type="System.Data.Linq.Binary" DbType="Binary(8) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="IterationsNumber" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(80) NOT NULL" CanBeNull="false" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="City" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="StateID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Zip" Type="System.String" DbType="NVarChar(80) NOT NULL" CanBeNull="false" />
+      <Column Name="IsEmailNotified" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DateRegistered" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ClubRoleID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SalaryVisible" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(80)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(80)" CanBeNull="true" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="StateName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="CountryID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Address2" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="Code" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="IsSSO" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="HasLoggedIn" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="AlternateName" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
+      <Column Name="HashInfo" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
+      <Column Name="ParentUserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SsoToken" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
+      <Column Name="SsoTokenExp" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ClubTypes" Type="System.String" DbType="NVarChar(512)" CanBeNull="true" />
+      <Column Name="BillingContact" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="User_Log" Member="Logs" ThisKey="UserID" OtherKey="UserID" Type="Log" />
+      <Association Name="User_SecretAnswer" Member="SecretAnswers" ThisKey="UserID" OtherKey="UserID" Type="SecretAnswer" />
+      <Association Name="User_SsoUser" Member="SsoUser" ThisKey="UserID" OtherKey="UserID" Type="SsoUser" Cardinality="One" />
+      <Association Name="Club_User" Member="Club" ThisKey="ClubID" OtherKey="ClubID" Type="Club" IsForeignKey="true" />
+      <Association Name="Country_User" Member="Country" ThisKey="CountryID" OtherKey="CountryID" Type="Country" IsForeignKey="true" />
+      <Association Name="Role_User" Member="Role" ThisKey="RoleID" OtherKey="RoleID" Type="Role" IsForeignKey="true" />
+      <Association Name="State_User" Member="State" ThisKey="StateID" OtherKey="StateID" Type="State" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.CopyClubAnswers" Method="CopyClubAnswers">
+    <Parameter Name="SourceClubID" Parameter="sourceClubID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="DestClubID" Parameter="destClubID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.DeleteAllAnswers" Method="DeleteAllAnswers">
+    <Parameter Name="QuestionID" Parameter="questionID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.DeleteAllQuestionsInArea" Method="DeleteAllQuestionsInArea">
+    <Parameter Name="AreaID" Parameter="areaID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.DeleteAllStoredFilters" Method="DeleteAllStoredFilters">
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.DeleteClubAndUsers" Method="DeleteClubAndUsers">
+    <Parameter Name="ClubID" Parameter="clubID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetAggregateNormalizedPercentileWithFilterV2" Method="GetAggregateNormalizedPercentileWithFilterV2">
+    <Parameter Name="ClubID" Parameter="clubID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="QuestionIDs" Parameter="questionIDs" Type="System.String" DbType="NVarChar(2000)" />
+    <Parameter Name="NormalizeID" Parameter="normalizeID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Year" Parameter="year" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Month" Parameter="month" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="FilterID" Parameter="filterID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Percentile25" Parameter="percentile25" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile50" Parameter="percentile50" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile75" Parameter="percentile75" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="ClubPercentile" Parameter="clubPercentile" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="ClubCount" Parameter="clubCount" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.DeleteClubAnswers" Method="DeleteClubAnswers">
+    <Parameter Name="ClubID" Parameter="clubID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.DeleteClubsByType" Method="DeleteClubsByType">
+    <Parameter Name="ClubTypeID" Parameter="clubTypeID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.DeleteClubTypeAndEverything" Method="DeleteClubTypeAndEverything">
+    <Parameter Name="ClubTypeID" Parameter="clubTypeID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.DeleteQuestion" Method="DeleteQuestion">
+    <Parameter Name="QuestionID" Parameter="questionID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.DeleteStoredFilter" Method="DeleteStoredFilter">
+    <Parameter Name="FilterID" Parameter="filterID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetAggregateNormalizedPercentile" Method="GetAggregateNormalizedPercentile">
+    <Parameter Name="ClubID" Parameter="clubID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="QuestionIDs" Parameter="questionIDs" Type="System.String" DbType="NVarChar(2000)" />
+    <Parameter Name="NormalizeID" Parameter="normalizeID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Year" Parameter="year" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Month" Parameter="month" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="Percentile25" Parameter="percentile25" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile50" Parameter="percentile50" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile75" Parameter="percentile75" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="ClubPercentile" Parameter="clubPercentile" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetAggregateNormalizedPercentileV2" Method="GetAggregateNormalizedPercentileV2">
+    <Parameter Name="ClubID" Parameter="clubID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="QuestionIDs" Parameter="questionIDs" Type="System.String" DbType="NVarChar(2000)" />
+    <Parameter Name="NormalizeID" Parameter="normalizeID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Year" Parameter="year" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Month" Parameter="month" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="Percentile25" Parameter="percentile25" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile50" Parameter="percentile50" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile75" Parameter="percentile75" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="ClubPercentile" Parameter="clubPercentile" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="ClubCount" Parameter="clubCount" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetAggregateNormalizedPercentileWithFilter" Method="GetAggregateNormalizedPercentileWithFilter">
+    <Parameter Name="ClubID" Parameter="clubID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="QuestionIDs" Parameter="questionIDs" Type="System.String" DbType="NVarChar(2000)" />
+    <Parameter Name="NormalizeID" Parameter="normalizeID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Year" Parameter="year" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Month" Parameter="month" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="FilterID" Parameter="filterID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Percentile25" Parameter="percentile25" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile50" Parameter="percentile50" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile75" Parameter="percentile75" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="ClubPercentile" Parameter="clubPercentile" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetAggregatePercentile" Method="GetAggregatePercentile">
+    <Parameter Name="ClubID" Parameter="clubID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="QuestionIDs" Parameter="questionIDs" Type="System.String" DbType="NVarChar(2000)" />
+    <Parameter Name="Year" Parameter="year" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Month" Parameter="month" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="Percentile25" Parameter="percentile25" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile50" Parameter="percentile50" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile75" Parameter="percentile75" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="ClubPercentile" Parameter="clubPercentile" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetNormalizedPercentileWithFilterV2" Method="GetNormalizedPercentileWithFilterV2">
+    <Parameter Name="ClubID" Parameter="clubID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="QuestionID" Parameter="questionID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NormalizeID" Parameter="normalizeID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Year" Parameter="year" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Month" Parameter="month" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="FilterID" Parameter="filterID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Percentile25" Parameter="percentile25" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile50" Parameter="percentile50" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile75" Parameter="percentile75" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="ClubPercentile" Parameter="clubPercentile" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="ClubCount" Parameter="clubCount" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetAggregatePercentileV2" Method="GetAggregatePercentileV2">
+    <Parameter Name="ClubID" Parameter="clubID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="QuestionIDs" Parameter="questionIDs" Type="System.String" DbType="NVarChar(2000)" />
+    <Parameter Name="Year" Parameter="year" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Month" Parameter="month" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="Percentile25" Parameter="percentile25" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile50" Parameter="percentile50" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile75" Parameter="percentile75" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="ClubPercentile" Parameter="clubPercentile" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="ClubCount" Parameter="clubCount" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetAggregatePercentileWithFilter" Method="GetAggregatePercentileWithFilter">
+    <Parameter Name="ClubID" Parameter="clubID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="QuestionIDs" Parameter="questionIDs" Type="System.String" DbType="NVarChar(2000)" />
+    <Parameter Name="Year" Parameter="year" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Month" Parameter="month" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="FilterID" Parameter="filterID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Percentile25" Parameter="percentile25" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile50" Parameter="percentile50" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile75" Parameter="percentile75" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="ClubPercentile" Parameter="clubPercentile" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetAggregatePercentileWithFilterV2" Method="GetAggregatePercentileWithFilterV2">
+    <Parameter Name="ClubID" Parameter="clubID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="QuestionIDs" Parameter="questionIDs" Type="System.String" DbType="NVarChar(2000)" />
+    <Parameter Name="Year" Parameter="year" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Month" Parameter="month" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="FilterID" Parameter="filterID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Percentile25" Parameter="percentile25" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile50" Parameter="percentile50" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile75" Parameter="percentile75" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="ClubPercentile" Parameter="clubPercentile" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="ClubCount" Parameter="clubCount" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetNormalizedPercentile" Method="GetNormalizedPercentile">
+    <Parameter Name="ClubID" Parameter="clubID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="QuestionID" Parameter="questionID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NormalizeID" Parameter="normalizeID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Year" Parameter="year" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Month" Parameter="month" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="Percentile25" Parameter="percentile25" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile50" Parameter="percentile50" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile75" Parameter="percentile75" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="ClubPercentile" Parameter="clubPercentile" Type="System.Double" DbType="Float" Direction="InOut" />
+    <ElementType Name="GetNormalizedPercentileResult">
+      <Column Name="curr_rank" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="next_rank" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="prev_rank" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="value" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="club_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetNormalizedPercentileV2" Method="GetNormalizedPercentileV2">
+    <Parameter Name="ClubID" Parameter="clubID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="QuestionID" Parameter="questionID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NormalizeID" Parameter="normalizeID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Year" Parameter="year" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Month" Parameter="month" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="Percentile25" Parameter="percentile25" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile50" Parameter="percentile50" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile75" Parameter="percentile75" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="ClubPercentile" Parameter="clubPercentile" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="ClubCount" Parameter="clubCount" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <ElementType Name="GetNormalizedPercentileV2Result">
+      <Column Name="curr_rank" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="next_rank" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="prev_rank" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="value" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="club_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetNormalizedPercentileWithFilter" Method="GetNormalizedPercentileWithFilter">
+    <Parameter Name="ClubID" Parameter="clubID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="QuestionID" Parameter="questionID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NormalizeID" Parameter="normalizeID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Year" Parameter="year" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Month" Parameter="month" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="FilterID" Parameter="filterID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Percentile25" Parameter="percentile25" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile50" Parameter="percentile50" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile75" Parameter="percentile75" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="ClubPercentile" Parameter="clubPercentile" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetPercentile" Method="GetPercentile">
+    <Parameter Name="ClubID" Parameter="clubID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="QuestionID" Parameter="questionID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Year" Parameter="year" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Month" Parameter="month" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="Percentile25" Parameter="percentile25" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile50" Parameter="percentile50" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile75" Parameter="percentile75" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="ClubPercentile" Parameter="clubPercentile" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PreviewMakeAnswersGlobal" Method="PreviewMakeAnswersGlobal">
+    <Parameter Name="QuestionID" Parameter="questionID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Year" Parameter="year" Type="System.Int16" DbType="SmallInt" />
+    <Parameter Name="MoveCount" Parameter="moveCount" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Parameter Name="DeleteCount" Parameter="deleteCount" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetPercentileV2" Method="GetPercentileV2">
+    <Parameter Name="ClubID" Parameter="clubID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="QuestionID" Parameter="questionID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Year" Parameter="year" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Month" Parameter="month" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="Percentile25" Parameter="percentile25" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile50" Parameter="percentile50" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile75" Parameter="percentile75" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="ClubPercentile" Parameter="clubPercentile" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="ClubCount" Parameter="clubCount" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetPercentileWithFilter" Method="GetPercentileWithFilter">
+    <Parameter Name="ClubID" Parameter="clubID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="QuestionID" Parameter="questionID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Year" Parameter="year" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Month" Parameter="month" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="FilterID" Parameter="filterID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Percentile25" Parameter="percentile25" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile50" Parameter="percentile50" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile75" Parameter="percentile75" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="ClubPercentile" Parameter="clubPercentile" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetPercentileWithFilterV2" Method="GetPercentileWithFilterV2">
+    <Parameter Name="ClubID" Parameter="clubID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="QuestionID" Parameter="questionID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Year" Parameter="year" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Month" Parameter="month" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="FilterID" Parameter="filterID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Percentile25" Parameter="percentile25" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile50" Parameter="percentile50" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="Percentile75" Parameter="percentile75" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="ClubPercentile" Parameter="clubPercentile" Type="System.Double" DbType="Float" Direction="InOut" />
+    <Parameter Name="ClubCount" Parameter="clubCount" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.MakeAnswersGlobal" Method="MakeAnswersGlobal">
+    <Parameter Name="QuestionID" Parameter="questionID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Year" Parameter="year" Type="System.Int16" DbType="SmallInt" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.MergeClubs" Method="MergeClubs">
+    <Parameter Name="SourceClubID" Parameter="sourceClubID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="DestClubID" Parameter="destClubID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="MoveData" Parameter="moveData" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="MoveUsers" Parameter="moveUsers" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="DeleteSource" Parameter="deleteSource" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.MoveClubAnswers" Method="MoveClubAnswers">
+    <Parameter Name="SourceClubID" Parameter="sourceClubID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="DestClubID" Parameter="destClubID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.RecalculateAllValues" Method="RecalculateAllValues">
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.RecalculateValuesByYear" Method="RecalculateValuesByYear">
+    <Parameter Name="Year" Parameter="year" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.RunIndexMaintenance" Method="RunIndexMaintenance">
+    <ElementType Name="RunIndexMaintenanceResult">
+      <Column Name="TableName" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="IndexName" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="FragPercent" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.RunIndexMaintenance" Method="RunIndexMaintenance1">
+    <ElementType Name="RunIndexMaintenanceResult1">
+      <Column Name="TableName" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="IndexName" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="FragPercent" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.ToggleDeleteNumericAnswerTrigger" Method="ToggleDeleteNumericAnswerTrigger">
+    <Parameter Name="DisableFlag" Parameter="disableFlag" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SetStoredFilter" Method="SetStoredFilter">
+    <Parameter Name="FilterID" Parameter="filterID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ClubList" Parameter="clubList" Type="System.String" DbType="VarChar(MAX)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.TemplateCleanupAnswers" Method="TemplateCleanupAnswers">
+    <Parameter Name="ClubID" Parameter="clubID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Year" Parameter="year" Type="System.Int16" DbType="SmallInt" />
+    <Parameter Name="Month" Parameter="month" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="CheckAllAnswerID" Parameter="checkAllAnswerID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.TemplateFillInstances" Method="TemplateFillInstances">
+    <Return Type="System.Int32" />
+  </Function>
+</Database>
