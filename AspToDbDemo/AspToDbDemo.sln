@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityCodeFirst", "EntityCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADO", "ADO\ADO.csproj", "{6B39B5DE-25D2-4699-B9B9-40497D768982}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Angular", "Angular\Angular.csproj", "{3C2E44E5-A91A-4480-9676-891D6E2E8FA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWcfService", "SampleWcfService\SampleWcfService.csproj", "{4120386E-A622-4ABE-BEBF-1DCC2949E432}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{6B39B5DE-25D2-4699-B9B9-40497D768982}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B39B5DE-25D2-4699-B9B9-40497D768982}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B39B5DE-25D2-4699-B9B9-40497D768982}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C2E44E5-A91A-4480-9676-891D6E2E8FA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C2E44E5-A91A-4480-9676-891D6E2E8FA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C2E44E5-A91A-4480-9676-891D6E2E8FA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C2E44E5-A91A-4480-9676-891D6E2E8FA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4120386E-A622-4ABE-BEBF-1DCC2949E432}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4120386E-A622-4ABE-BEBF-1DCC2949E432}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4120386E-A622-4ABE-BEBF-1DCC2949E432}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4120386E-A622-4ABE-BEBF-1DCC2949E432}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
