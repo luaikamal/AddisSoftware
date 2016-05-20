@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sample {
+namespace ADO {
     
     
-    public partial class WebForm_Ado {
+    public partial class WebFormAdo {
         
         /// <summary>
         /// form1 control.

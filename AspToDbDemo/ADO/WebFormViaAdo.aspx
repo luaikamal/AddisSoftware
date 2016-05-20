@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebFormViaAdo.aspx.cs" Inherits="Sample.WebForm_Ado" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebFormViaAdo.aspx.cs" Inherits="ADO.WebFormAdo" %>
 
 <!DOCTYPE html>
 

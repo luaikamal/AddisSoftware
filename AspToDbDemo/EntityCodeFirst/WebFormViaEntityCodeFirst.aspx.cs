@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
-namespace Sample
+namespace EntityCodeFirst
 {
-    public partial class WebForm_CodeFirst : System.Web.UI.Page
+    public partial class WebFormCodeFirst : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

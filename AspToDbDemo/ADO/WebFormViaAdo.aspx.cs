@@ -8,9 +8,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Sample
+namespace ADO
 {
-    public partial class WebForm_Ado : System.Web.UI.Page
+    public partial class WebFormAdo : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
